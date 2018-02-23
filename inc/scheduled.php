@@ -135,18 +135,9 @@
 		<label for="content">Content:</label>
 	
 	</div>
-	</form>
-	<br>
-	<div id="result"></div>
-	</div>
-	</div>
-	</div>
-	<div class="col-md-3"></div>
-	</div>
-  
-
-    <div id="i-main-block">
-        <div id="display">
+	
+	    <div id="i-main-block">
+        <div id="content">
   
 
 
@@ -156,15 +147,116 @@
       </div>
 
     </div>
+	
+	</form>
+	<br>
+	<div id="result"></div>
+	</div>
+	</div>
+	</div>
+	<div class="col-md-3"></div>
+	</div>
+  
+<!-- mahdiyari php included -->
 
-  </body>
+<div class="row" style="margin:0 !important">
+	<div style="" class="col-md-12">
+	<?
+	date_default_timezone_set('UTC');
+	function after($x){
+		$sec = $x - strtotime('now');
+		if($sec > 60){
+			if($sec > 3600){
+				if($sec > 86400){
+					$ago= round($sec/86400).' Days';
+				}else{
+					$ago= round($sec/3600).' Hours';
+				}
+			}else{
+				$ago= round($sec/60).' Minutes';
+			}
+		}else{
+			$ago= round($sec).' Seconds';
+		}
+		return $ago;
+	}
+	$result = $conn->query("SELECT EXISTS(SELECT * FROM `posts` WHERE `user`='$name')");
+	foreach($result as $x){
+		foreach($x as $x){}
+	}
+	if($x == 1){
+	?>
+	<div class="card">
+	<div class="content">
+	<h3 style=" padding-bottom:10px;">Scheduled Posts:</h3>
+	<div style="max-height:600px; overflow:auto;" class="table-responsive-vertical shadow-z-1">
+	  <!-- Table starts here -->
+	  
+	<table id="table" class="table table-hover table-mc-light-blue">
+	  <thead>
+		<tr>
+		  <th>#</th>
+		  <th>Title</th>
+		  <th>Content</th>
+		  <th>Publish Time</th>
+		  <th>Action</th>
+		</tr>
+	  </thead>
+	  <tbody>
+	<?
+	$i = 1;
+	$result = $conn->query("SELECT * FROM `posts` WHERE `user`='$name' ORDER BY `posts`.`date` ASC");
+		foreach($result as $x){
+		$now = strtotime('now');
+	?>
+			<tr class="tr2">
+				<td data-title="ID"><? echo $i; ?></td>
+				<td data-title="Name"><? echo $x['title']; ?></td>
+				<td data-title="Status"><textarea disabled="" height="50px"><? echo $x['content']; ?></textarea></td>
+				<td data-title="Status">After <? echo after($x['date']); ?></td>
+				<td data-title="Status"><button class="btn btn-danger" onclick="if(confirm('Are You Sure?')) deletepost('<? echo $x['id']; ?>');">DELETE</button></td>
+			</tr>
+
+			<?
+			$i += 1;
+		}
+		?>
+			  </tbody>
+		</table>
+		</div>
+		
+		</div>
+		</div>
+		
+		<?
+	}
+?>
+
+		
+		
+<script>
+document.getElementById('date').value =1;
+document.getElementById('title').value="";
+document.getElementById('content').value='';
+document.getElementById('tags').value='';
+</script>
+
+</div>
+</div>
+</div> <!-- /Content -->
+
+
+<!-- end of PHP code -->
+
+
+</body>
 
 
 
 
     <script src='http://fb.me/react-15.0.1.min.js'></script>
-<script src='http://fb.me/react-dom-15.0.1.min.js'></script>
-<script src='js/guide.js'></script>
+	<script src='http://fb.me/react-dom-15.0.1.min.js'></script>
+	<script src='js/guide.js'></script>
     <script  src="js/index.js"></script>
 
 
